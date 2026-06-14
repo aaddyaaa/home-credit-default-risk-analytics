@@ -2,26 +2,33 @@
 
 ## Project Overview
 
-This project analyzes customer loan application data from the Home Credit Default Risk dataset to identify borrowers with a high probability of default. The objective is to support data-driven lending decisions through exploratory analysis, feature engineering, predictive modeling, risk segmentation, and dashboard-ready analytics.
+This project analyzes customer loan application data from the Home Credit Default Risk dataset to identify borrowers with a high probability of default. The objective is to support data-driven lending decisions through exploratory analysis, feature engineering, predictive modeling, and risk segmentation.
 
-## Business Problem
+---
 
-Financial institutions face significant losses due to loan defaults. Accurately identifying high-risk applicants can help:
+## Model Performance
 
-* Reduce credit losses
-* Improve loan approval decisions
-* Optimize risk management strategies
-* Enhance portfolio performance
+### ROC Curve Comparison
 
-This project develops a credit risk analytics pipeline that predicts customer default risk and segments customers into actionable risk categories.
+![ROC Curve Comparison](images/roc_curve_comparison.png)
+
+Comparison of classification models using ROC-AUC. XGBoost achieved the highest ROC-AUC score of **0.7667**, indicating better discrimination between default and non-default customers.
+
+### Precision-Recall Curve Comparison
+
+![Precision Recall Curve](images/precision_recall_curve.png)
+
+Since the dataset is highly imbalanced, Precision-Recall analysis provides a more meaningful evaluation of model performance. XGBoost achieved the highest Average Precision score (**0.256**) among the evaluated models.
+
+### XGBoost Feature Importance
+
+![Feature Importance](images/xgboost_feature_importance.png)
+
+Feature importance analysis highlights the variables that contributed most to default prediction. External credit score features, income-related variables, and engineered financial ratios emerged as key predictors.
 
 ---
 
 ## Dataset
-
-**Source:** Home Credit Default Risk Dataset
-
-### Data Summary
 
 * 307,511 customer records
 * 210 features after preprocessing
@@ -30,18 +37,9 @@ This project develops a credit risk analytics pipeline that predicts customer de
 
 ---
 
-## Project Workflow
+## Feature Engineering
 
-### 1. Exploratory Data Analysis (EDA)
-
-* Analyzed customer demographics and financial characteristics
-* Investigated class imbalance in default behavior
-* Examined distributions of income, credit amount, annuity, and age
-* Identified patterns associated with loan defaults
-
-### 2. Feature Engineering
-
-Created business-focused features including:
+Created business-focused features such as:
 
 * AGE
 * AGE_GROUP
@@ -63,110 +61,32 @@ Created business-focused features including:
 * OWNS_CAR
 * OWNS_REALTY
 
-### 3. Model Development
-
-Evaluated multiple classification models:
-
-#### Dummy Classifier
-
-* Accuracy: 0.9193
-* ROC-AUC: 0.5000
-
-#### Logistic Regression
-
-* Accuracy: 0.6885
-* Precision: 0.1614
-* Recall: 0.6814
-* F1 Score: 0.2610
-* ROC-AUC: 0.7503
-
-#### Random Forest
-
-* Accuracy: 0.9194
-* Precision: 0.5849
-* Recall: 0.0062
-* F1 Score: 0.0124
-* ROC-AUC: 0.7324
-
-#### XGBoost (Selected Model)
-
-* Accuracy: 0.7199
-* Precision: 0.1765
-* Recall: 0.6737
-* F1 Score: 0.2797
-* ROC-AUC: 0.7667
-
 ---
 
-## Model Evaluation
+## Model Comparison
 
-Performance comparison included:
-
-* Confusion Matrix
-* ROC Curve Analysis
-* Precision-Recall Curve Analysis
-* Average Precision Comparison
-* Feature Importance Analysis
-
-### Average Precision Scores
-
-| Model               | AP Score |
-| ------------------- | -------- |
-| Logistic Regression | 0.231    |
-| Random Forest       | 0.216    |
-| XGBoost             | 0.256    |
+| Model               | Accuracy | Precision | Recall | F1 Score | ROC-AUC |
+| ------------------- | -------- | --------- | ------ | -------- | ------- |
+| Dummy Classifier    | 0.9193   | -         | -      | -        | 0.5000  |
+| Logistic Regression | 0.6885   | 0.1614    | 0.6814 | 0.2610   | 0.7503  |
+| Random Forest       | 0.9194   | 0.5849    | 0.0062 | 0.0124   | 0.7324  |
+| XGBoost             | 0.7199   | 0.1765    | 0.6737 | 0.2797   | 0.7667  |
 
 ---
 
 ## Risk Segmentation
 
-Customers were segmented into:
+Customers were categorized into:
 
 * Low Risk
 * Medium Risk
 * High Risk
 
-This segmentation enables business teams to prioritize loan reviews and improve credit decision-making.
+This segmentation supports more informed lending decisions and prioritization of high-risk applicants.
 
 ---
 
-## Dashboard Dataset
-
-A dashboard-ready dataset containing 61,503 customer records was created for visualization and reporting.
-
-Included fields:
-
-* Default Probability
-* Risk Segment
-* Age
-* Income
-* Credit Amount
-* Annuity
-* Employment Information
-* Financial Ratios
-* Customer Attributes
-
----
-
-## Repository Structure
-
-```text
-home-credit-default-risk-analytics/
-│
-├── data/
-│   └── credit_risk_dashboard_data.csv
-│
-├── notebooks/
-│   ├── 01_EDA.ipynb
-│   ├── 02_Feature_Engineering.ipynb
-│   └── 03_Model_Building.ipynb
-│
-├── README.md
-├── requirements.txt
-└── .gitignore
-```
-
-## Tools & Technologies
+## Technologies Used
 
 * Python
 * Pandas
@@ -180,18 +100,37 @@ home-credit-default-risk-analytics/
 
 ---
 
+## Repository Structure
+
+home-credit-default-risk-analytics/
+
+├── data/
+
+├── notebooks/
+
+├── images/
+
+├── README.md
+
+├── requirements.txt
+
+└── .gitignore
+
+---
+
 ## Key Business Insights
 
-* Customers with higher credit-to-income ratios exhibited increased default risk.
+* Customers with high credit-to-income ratios exhibited elevated default risk.
 * External credit score features were among the strongest predictors of repayment behavior.
-* Risk segmentation effectively differentiated low-risk and high-risk borrowers.
-* Predictive analytics can assist lenders in improving loan approval strategies and reducing financial risk.
+* Feature engineering significantly improved risk characterization.
+* XGBoost delivered the strongest overall predictive performance.
+* Risk segmentation enables targeted review of potentially risky applicants.
 
 ---
 
 ## Future Enhancements
 
-* Interactive Power BI dashboard
-* Automated reporting pipeline
-* Advanced customer segmentation
-* Real-time risk monitoring
+* Interactive Power BI Dashboard
+* Executive Risk Monitoring Dashboard
+* Automated Credit Risk Reporting
+* Enhanced Customer Segmentation
